@@ -20,6 +20,9 @@
     <li>Press 'i'. Switches scope to 'issues'.</li>
     <li>Press 'c'. Console should log function call.</li>
     <li>Press 'o' or Enter or Cursor &larr;. Console should log function call.</li>
+    <li>Press and hold 'm'. Console should log a message every second.</li>
+    <li>Press 'g' followed closely by 'q'. Console should log function call.</li>
+    <li>Every second console should log a message listing all the currently pressed keycodes.</li>
   </ol>
 
   <p>
@@ -67,6 +70,36 @@
       console.log('key["⌘"]', key["⌘"]);
       return false; // prevent default && stop propagation
     });
+
+    key('⌘+x, ctrl+x', function(event, handler){
+      console.log(handler.shortcut, handler.scope);
+      return false;
+    });
+
+    key('/', function(){ console.log('/') });
+    key('shift+]', function(){ console.log('shift+]') });
+
+    setInterval(function () { 
+      var keys = key.getPressedKeyCodes();
+      if (keys.length > 0) {
+        console.log('All keys currently down: ' + key.getPressedKeyCodes());
+        if (key.isPressed(77)) {
+            console.log('M key is currently down');
+        }
+      }
+    }, 1000);
+
+    key('g&q', function(event, handler) {
+      console.log('g&q were pressed');
+    });
+
+    key('y&o&u&space&r&o&c&k', function() {
+      alert('You Rock too!');
+    });
+
+    // document.onkeydown = function(event){
+    //  console.log(event.keyCode);
+    // }
   </script>
 </body>
 </html>
